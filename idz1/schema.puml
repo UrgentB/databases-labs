@@ -1,0 +1,65 @@
+@startuml
+!define pk <color:#006600><b>
+!define fk <color:#0000FF><b>
+
+skinparam class {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+    ArrowColor #A80036
+}
+
+class customers {
+    + pk customer_id: SERIAL
+    --
+    name: TEXT
+    email: TEXT
+    phone: TEXT
+}
+
+class addresses {
+    + pk address_id: SERIAL
+    --
+    fk customer_id: INTEGER
+    address: TEXT
+}
+
+class orders {
+    + pk order_id: INTEGER
+    --
+    fk customer_id: INTEGER
+    fk address_id: INTEGER
+    order_date: DATE
+    status: TEXT
+    total_amount: NUMERIC
+}
+
+class order_items {
+    fk order_id: INTEGER
+    fk product_id: INTEGER
+    --
+    quantity: INTEGER
+    price_at_order: NUMERIC
+}
+
+class products {
+    + pk product_id: SERIAL
+    --
+    name: TEXT
+    fk category_id: INTEGER
+    current_price: NUMERIC
+}
+
+class categories {
+    + pk category_id: SERIAL
+    --
+    name: TEXT
+}
+
+customers "1" -- "0..*" addresses
+customers "1" -- "0..*" orders
+addresses "1" -- "0..*" orders
+orders "1" -- "1..*" order_items
+products "1" -- "0..*" order_items
+categories "1" -- "0..*" products
+
+@enduml

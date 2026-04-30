@@ -1,0 +1,6 @@
+query_id,query_name,duration_ms
+01,Top 10 Products,116
+02,Monthly Dynamics,91
+03,Percentiles,80
+04,Customer Search,153
+05,Raw vs Aggregate,93

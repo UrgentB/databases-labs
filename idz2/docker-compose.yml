@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest  # исправлено: полное имя образа
+    container_name: clickhouse-server
+    ports:
+      - "8123:8123"   # HTTP
+      - "9000:9000"   # Native
+    volumes:
+      - ./data/clickhouse:/var/lib/clickhouse
+      - ./config/config.d:/etc/clickhouse-server/config.d
+      - ./config/users.xml:/etc/clickhouse-server/users.xml
+      - ./scripts:/scripts
+      - ./sql:/sql/
+      - ./results:/results
+  postgres:
+    image: postgres:latest
+    container_name: postgres-server
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: shop
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/
+      - ./scripts:/scripts
+      - ./sql:/sql/
+      - ./results:/results 

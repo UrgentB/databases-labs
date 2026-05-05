@@ -1,10 +1,10 @@
 
-clickhouse1
+clickhouse1 \n
 events
 
-clickhouse2
+clickhouse2 \n
 events
 
-clickhouse3
+clickhouse3 \n
 events
 

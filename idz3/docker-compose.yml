@@ -53,6 +53,7 @@ services:
       - "8123:8123"
       - "9000:9000"
     volumes:
+      - ./sql:/sql
       - ./config/clickhouse/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
       - ./config/clickhouse/node1_macros.xml:/etc/clickhouse-server/config.d/macros.xml
       - ch1_data:/var/lib/clickhouse

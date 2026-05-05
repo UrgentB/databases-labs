@@ -1,103 +1,124 @@
+version: '3.8'
+
 services:
+  # ClickHouse Keeper nodes
   keeper1:
     image: clickhouse/clickhouse-server:23.8-alpine
-    container_name: keeper1
     hostname: keeper1
+    container_name: keeper1
     ports:
       - "9181:9181"
     volumes:
-      - ./data/keeper1:/var/lib/clickhouse
       - ./config/keeper/keeper1.xml:/etc/clickhouse-server/config.d/keeper.xml
-    command: clickhouse-keeper --config /etc/clickhouse-server/config.d/keeper.xml
+      - keeper1_data:/var/lib/clickhouse
+      - keeper1_logs:/var/log/clickhouse-server
     networks:
-      - ch-network
+      - ch_network
+    user: "101:101"
 
   keeper2:
     image: clickhouse/clickhouse-server:23.8-alpine
-    container_name: keeper2
     hostname: keeper2
+    container_name: keeper2
     ports:
       - "9182:9181"
     volumes:
-      - ./data/keeper2:/var/lib/clickhouse
       - ./config/keeper/keeper2.xml:/etc/clickhouse-server/config.d/keeper.xml
-    command: clickhouse-keeper --config /etc/clickhouse-server/config.d/keeper.xml
+      - keeper2_data:/var/lib/clickhouse
+      - keeper2_logs:/var/log/clickhouse-server
     networks:
-      - ch-network
+      - ch_network
+    user: "101:101"
 
   keeper3:
     image: clickhouse/clickhouse-server:23.8-alpine
-    container_name: keeper3
     hostname: keeper3
+    container_name: keeper3
     ports:
       - "9183:9181"
     volumes:
-      - ./data/keeper3:/var/lib/clickhouse
       - ./config/keeper/keeper3.xml:/etc/clickhouse-server/config.d/keeper.xml
-    command: clickhouse-keeper --config /etc/clickhouse-server/config.d/keeper.xml
+      - keeper3_data:/var/lib/clickhouse
+      - keeper3_logs:/var/log/clickhouse-server
     networks:
-      - ch-network
+      - ch_network
+    user: "101:101"
 
+  # ClickHouse nodes
   clickhouse1:
     image: clickhouse/clickhouse-server:23.8-alpine
-    container_name: clickhouse1
     hostname: clickhouse1
+    container_name: clickhouse1
     ports:
       - "8123:8123"
       - "9000:9000"
     volumes:
-      - ./data/clickhouse1:/var/lib/clickhouse
-      - ./config/clickhouse/node1_macros.xml:/etc/clickhouse-server/config.d/macros.xml
       - ./config/clickhouse/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
+      - ./config/clickhouse/node1_macros.xml:/etc/clickhouse-server/config.d/macros.xml
+      - ch1_data:/var/lib/clickhouse
+      - ch1_logs:/var/log/clickhouse-server
+    networks:
+      - ch_network
     depends_on:
       - keeper1
       - keeper2
       - keeper3
-    environment:
-      CLICKHOUSE_KEEPER_HOST: keeper1:9181,keeper2:9181,keeper3:9181
-    networks:
-      - ch-network
+    user: "101:101"
 
   clickhouse2:
     image: clickhouse/clickhouse-server:23.8-alpine
-    container_name: clickhouse2
     hostname: clickhouse2
+    container_name: clickhouse2
     ports:
       - "8124:8123"
       - "9001:9000"
     volumes:
-      - ./data/clickhouse2:/var/lib/clickhouse
-      - ./config/clickhouse/node2_macros.xml:/etc/clickhouse-server/config.d/macros.xml
       - ./config/clickhouse/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
+      - ./config/clickhouse/node2_macros.xml:/etc/clickhouse-server/config.d/macros.xml
+      - ch2_data:/var/lib/clickhouse
+      - ch2_logs:/var/log/clickhouse-server
+    networks:
+      - ch_network
     depends_on:
       - keeper1
       - keeper2
       - keeper3
-    environment:
-      CLICKHOUSE_KEEPER_HOST: keeper1:9181,keeper2:9181,keeper3:9181
-    networks:
-      - ch-network
+    user: "101:101"
 
   clickhouse3:
     image: clickhouse/clickhouse-server:23.8-alpine
-    container_name: clickhouse3
     hostname: clickhouse3
+    container_name: clickhouse3
     ports:
       - "8125:8123"
       - "9002:9000"
     volumes:
-      - ./data/clickhouse3:/var/lib/clickhouse
-      - ./config/clickhouse/node3_macros.xml:/etc/clickhouse-server/config.d/macros.xml
       - ./config/clickhouse/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
+      - ./config/clickhouse/node3_macros.xml:/etc/clickhouse-server/config.d/macros.xml
+      - ch3_data:/var/lib/clickhouse
+      - ch3_logs:/var/log/clickhouse-server
+    networks:
+      - ch_network
     depends_on:
       - keeper1
       - keeper2
       - keeper3
-    environment:
-      CLICKHOUSE_KEEPER_HOST: keeper1:9181,keeper2:9181,keeper3:9181
-    networks:
-      - ch-network
+    user: "101:101"
 
 networks:
-  ch-network:
+  ch_network:
     driver: bridge
+
+volumes:
+  keeper1_data:
+  keeper2_data:
+  keeper3_data:
+  keeper1_logs:
+  keeper2_logs:
+  keeper3_logs:
+  ch1_data:
+  ch2_data:
+  ch3_data:
+  ch1_logs:
+  ch2_logs:
+  ch3_logs:

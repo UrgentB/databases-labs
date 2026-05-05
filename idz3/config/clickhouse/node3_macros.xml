@@ -1,7 +1,7 @@
 <clickhouse>
     <macros>
-        <shard>03</shard>
-        <replica>clickhouse1</replica>
-        <cluster>test_cluster</cluster>
+        <cluster>my_cluster</cluster>
+        <shard>1</shard>
+        <replica>replica3</replica>
     </macros>
 </clickhouse>

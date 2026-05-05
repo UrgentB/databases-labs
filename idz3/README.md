@@ -15,5 +15,15 @@ docker exec keeper${NODE_ID} bash -c "apt-get update && apt-get install -y netca
 docker exec keeper${NODE_ID} bash -c "echo mntr | nc localhost 9181" >> checks/keeper_health.txt
 ```
 
+docker exec keeper1 bash -c "echo mntr | nc keeper2 9181"
+
 ## Часть 2. Реплицированные таблицы.
+
+Написал bash скрипт который сначал создаёт таблицу в однолй реплике, а потом. обращается к каждой реплике и смотрить какие таблицы она имеет. 
+
+- Скрипт: scripts/init_tables.bash;
+- Результат: checks/tables_created.txt
+
+## Часть 3. Проверка репликации.
+
 

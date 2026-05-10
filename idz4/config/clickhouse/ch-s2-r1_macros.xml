@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<clickhouse><macros><replica>ch-s2-r13</replica><shard>3</shard><cluster>cluster_2x2</cluster></macros></clickhouse>

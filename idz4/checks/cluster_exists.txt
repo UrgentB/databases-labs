@@ -1,0 +1,5 @@
+cluster	shard_num	shard_weight	replica_num	host_name	host_address	port	is_local	user	default_database	errors_count	slowdowns_count	estimated_recovery_time	database_shard_name	database_replica_name	is_active
+cluster_2x2	1	1	1	ch-s1-r1	172.25.0.5	9000	0	default		0	0	0			\N
+cluster_2x2	1	1	2	ch-s1-r2	172.25.0.6	9000	0	default		0	0	0			\N
+cluster_2x2	2	1	1	ch-s2-r1	172.25.0.3	9000	1	default		0	0	0			\N
+cluster_2x2	2	1	2	ch-s2-r2	172.25.0.7	9000	0	default		0	0	0			\N

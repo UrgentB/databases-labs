@@ -1,12 +1,26 @@
+=== Row Count per Replica ===
 --- ch-s1-r1 ---
-ch-s1-r1	0
+ch-s1-r1	1000292
 
 --- ch-s1-r2 ---
-ch-s1-r2	0
+ch-s1-r2	1000292
 
 --- ch-s2-r1 ---
-ch-s2-r1	997640
+ch-s2-r1	999708
 
 --- ch-s2-r2 ---
-ch-s2-r2	997640
+ch-s2-r2	999708
+
+=== Unique Users and Total Rows ===
+--- ch-s1-r1 ---
+ch-s1-r1	506086	1000292
+
+--- ch-s1-r2 ---
+ch-s1-r2	506086	1000292
+
+--- ch-s2-r1 ---
+ch-s2-r1	498311	999708
+
+--- ch-s2-r2 ---
+ch-s2-r2	498311	999708
 

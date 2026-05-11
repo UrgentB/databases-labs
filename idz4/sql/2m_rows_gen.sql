@@ -1,4 +1,4 @@
-DELETE FROM events_distributed;
+TRUNCATE TABLE events_distributed;
 
 INSERT INTO events_distributed (
                                 event_date, 
@@ -11,7 +11,7 @@ INSERT INTO events_distributed (
 SELECT
     toDate('2024-01-01') + (rand() % 365) as event_date,
     event_date + INTERVAL (rand() % 86400) SECOND as event_time,
-    (number % 100000) + 1 as user_id,
+    (number % 1_000_000) + 1 AS user_id,
     toString(number+rand()) as session_id,
     CASE
         WHEN rand()%3=0 THEN 'похороны'
